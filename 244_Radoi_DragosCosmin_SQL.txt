@@ -1,0 +1,763 @@
+--Ex_4
+
+--Notatie de la autor
+--Daca doriti sa creati si sa inserati baza de date
+--Toate comenzile trebuie sa fie in ordinea de la ex_5
+
+--locatie
+CREATE TABLE locatie(id_locatie NUMBER(4), oras VARCHAR(20));
+
+ALTER TABLE locatie
+ADD CONSTRAINT PK_locatie PRIMARY KEY(id_locatie);
+
+--magazin
+CREATE TABLE magazin(id_magazin NUMBER(4), id_locatie NUMBER(4));
+
+ALTER TABLE magazin
+ADD CONSTRAINT PK_magazin PRIMARY KEY(id_magazin)
+ADD CONSTRAINT FK_locatie2 FOREIGN KEY (id_locatie) REFERENCES locatie(id_locatie);
+
+--angajati
+CREATE TABLE angajati(id_angajat NUMBER(4), id_magazin NUMBER(4), prenume VARCHAR2(20), 
+nume VARCHAR2(20) NOT NULL, nume_job VARCHAR2(15), salariu NUMBER(8, 2) NOT NULL, email CHAR(15));
+
+ALTER TABLE angajati
+ADD CONSTRAINT PK_angajati PRIMARY KEY(id_angajat)
+ADD CONSTRAINT FK_magazin2 FOREIGN KEY (id_magazin) REFERENCES magazin(id_magazin);
+
+--marca
+CREATE TABLE marca(id_marca NUMBER(4), nume_marca VARCHAR2(15));
+
+ALTER TABLE marca
+ADD CONSTRAINT PK_marca PRIMARY KEY(id_marca);
+
+--instrumente muzicale
+CREATE TABLE instrumente_muzicale(id_instrument NUMBER(4), id_marca NUMBER(4), id_magazin NUMBER(4), nume_instrument VARCHAR2(15));
+
+ALTER TABLE instrumente_muzicale
+ADD CONSTRAINT PK_instrument PRIMARY KEY(id_instrument)
+ADD CONSTRAINT FK_magazin3 FOREIGN KEY (id_magazin) REFERENCES magazin(id_magazin)
+ADD CONSTRAINT FK_marca2 FOREIGN KEY (id_marca) REFERENCES marca(id_marca);
+
+--livrare
+CREATE TABLE livrare(id_livrare NUMBER(4), id_instrument NUMBER(4), data_livrare DATE, data_sosire DATE);
+
+ALTER TABLE livrare
+ADD CONSTRAINT PK_livrare PRIMARY KEY(id_livrare)
+ADD CONSTRAINT FK_instrument2 FOREIGN KEY(id_instrument) REFERENCES instrumente_muzicale(id_instrument);
+
+--clienti
+CREATE TABLE clienti(id_client NUMBER(4), id_livrare NUMBER(4), id_magazin NUMBER(4), 
+prenume VARCHAR2(20), nume VARCHAR2(20), nume_cont CHAR(15));
+
+ALTER TABLE clienti
+ADD CONSTRAINT PK_client PRIMARY KEY(id_client)
+ADD CONSTRAINT FK_livrare2 FOREIGN KEY(id_livrare) REFERENCES livrare(id_livrare)
+ADD CONSTRAINT FK_magazin4 FOREIGN KEY(id_magazin) REFERENCES magazin(id_magazin);
+
+--magazin-clienti
+CREATE TABLE magazin_clienti(id_client NUMBER(4), id_magazin NUMBER(4), nume_cont
+CHAR(15));
+
+ALTER TABLE magazin_clienti
+ADD CONSTRAINT FK_ID_Magazin_Clienti FOREIGN KEY(id_client) REFERENCES
+clienti(id_client)
+ADD CONSTRAINT FK_ID_Clienti_Magazin FOREIGN KEY(id_magazin) REFERENCES
+magazin(id_magazin);
+
+--magazin-instrumente-muzicale
+CREATE TABLE magazin_instrumente_muzicale(id_instrument NUMBER(4), id_magazin
+NUMBER(4), nume_instrument VARCHAR(15));
+
+ALTER TABLE magazin_instrumente_muzicale
+ADD CONSTRAINT FK_ID_Magazin_Instrumente FOREIGN KEY(id_magazin) REFERENCES
+magazin(id_magazin)
+ADD CONSTRAINT FK_ID_Instrumente_Magazin FOREIGN KEY(id_instrument)
+REFERENCES instrumente_muzicale(id_instrument);
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+--Ex_5
+
+CREATE TABLE locatie(id_locatie NUMBER(4), oras VARCHAR(20));
+
+ALTER TABLE locatie
+ADD CONSTRAINT PK_locatie PRIMARY KEY(id_locatie);
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(1, 'New York');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(2, 'London');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(3, 'Paris');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(4, 'Tokyo');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(5, 'Sydney');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(6, 'Rome');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(7, 'Barcelona');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(8, 'Berlin');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(9, 'Mumbai');
+
+INSERT INTO locatie (id_locatie, oras)
+VALUES(10, 'Cairo');
+
+----------------------------------------------
+CREATE TABLE magazin(id_magazin NUMBER(4), id_locatie NUMBER(4));
+
+ALTER TABLE magazin
+ADD CONSTRAINT PK_magazin PRIMARY KEY(id_magazin)
+ADD CONSTRAINT FK_locatie2 FOREIGN KEY (id_locatie) REFERENCES locatie(id_locatie);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(101, 1);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(102, 2);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(103, 3);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(104, 4);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(105, 5);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(106, 6);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(107, 7);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(108, 8);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(109, 9);
+
+INSERT INTO magazin (id_magazin, id_locatie)
+VALUES(110, 10);
+
+-----------------------------------------------------------------
+
+
+CREATE TABLE angajati(id_angajat NUMBER(4), id_magazin NUMBER(4), prenume VARCHAR2(20), 
+nume VARCHAR2(20) NOT NULL, nume_job VARCHAR2(15), salariu NUMBER(8, 2) NOT NULL, email CHAR(15));
+
+ALTER TABLE angajati
+ADD CONSTRAINT PK_angajati PRIMARY KEY(id_angajat)
+ADD CONSTRAINT FK_magazin2 FOREIGN KEY (id_magazin) REFERENCES magazin(id_magazin);
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1001, 101, 'John', 'Smith', 'manager', 50000, 'john@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1002, 102, 'Emily', 'Johnson', 'tehnician', 40000, 'emi@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1003, 103, 'Sarah', 'Brown', 'manager', 50000, 'sarah@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1004, 104, 'Michael', 'Williams', 'vanzator', 30000, 'mike@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1005, 105, 'David', 'Davis', 'tehnician', 40000, 'david@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1006, 106, 'Jessica', 'Miller', 'vanzator', 30000, 'mill@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1007, 107, 'Matthew', 'Wilson', 'manager', 50000, 'matt@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1008, 108, 'Olivia', 'Anderson', 'tehnician', 40000, 'olie@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1009, 109, 'Ethan', 'Taylor', 'vanzator', 30000, 'ethan@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1010, 110, 'Ava', 'Martinez', 'manager', 50000, 'ava@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1011, 101, 'Horia', 'Mihai', 'tehnician', 40000, 'horia@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1012, 101, 'Nick', 'Hincu', 'vanzator', 30000, 'Nick@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1013, 101, 'Cristi', 'Andrei', 'tehnician', 40000, 'Cris@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1014, 107, 'Andrei', 'Cherciu', 'manager', 50000, 'Andii@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1015, 107, 'Vlad', 'Tudose', 'vanzator', 30000, 'Vlad@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1016, 107, 'Alin', 'Iosif', 'tehnician', 40000, 'Alin@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1017, 109, 'Alex', 'Iosif', 'magager', 50000, 'Alex@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1018, 110, 'David', 'Ranaciu', 'vanzator', 30000, 'David@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1019, 103, 'Robert', 'Trifu', 'tehnician', 40000, 'Rob@gmail.com');
+
+INSERT INTO angajati (id_angajat, id_magazin, prenume, nume, nume_job, salariu, email)
+VALUES(1020, 103, 'Filip', 'Dima', 'vanzator', 30000, 'Filip@gmail.com');
+---------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE marca(id_marca NUMBER(4), nume_marca VARCHAR2(15));
+
+ALTER TABLE marca
+ADD CONSTRAINT PK_marca PRIMARY KEY(id_marca);
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(201, 'Gibson');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(202, 'Fender');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(203, 'Pearl');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(204, 'Yamaha');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(205, 'Stradivarius');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(206, 'Selmer');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(207, 'Bach');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(208, 'Muramatsu');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(209, 'Ibanez');
+
+INSERT INTO marca(id_marca, nume_marca)
+VALUES(210, 'Roland');
+
+---------------------------------------------------------------------------------------
+CREATE TABLE instrumente_muzicale(id_instrument NUMBER(4), id_marca NUMBER(4), id_magazin NUMBER(4), nume_instrument VARCHAR2(15), numar_instrumente NUMBER(4));
+
+ALTER TABLE instrumente_muzicale
+ADD CONSTRAINT PK_instrument PRIMARY KEY(id_instrument)
+ADD CONSTRAINT FK_magazin3 FOREIGN KEY (id_magazin) REFERENCES magazin(id_magazin)
+ADD CONSTRAINT FK_marca2 FOREIGN KEY (id_marca) REFERENCES marca(id_marca);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(301, 201, 101, 'Chit. Acustica', 23);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(302, 202, 102, 'Chit. Electrica', 57);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(303, 203, 103, 'Tobe', 14);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(304, 204, 104, 'Pian', 11);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(305, 205, 105, 'Vioara', 54);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(306, 206, 106, 'Saxofon', 67);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(307, 207, 107, 'Trompeta', 45);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(308, 208, 108, 'Flaut', 67);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(309, 209, 109, 'Chitara Bas', 34);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(310, 210, 110, 'Clape', 55);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(311, 201, 103, 'Cello', 66);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(312, 202, 110, 'Banjo', 13);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(313, 203, 107, 'Harpa', 9);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(314, 204, 106, 'Mandolina', 24);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(315, 205, 110, 'Acordeon', 9);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(316, 206, 107, 'Trombon', 14);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(317, 207, 101, 'Clarinet', 39);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(318, 208, 102, 'Oboi', 15);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(319, 209, 109, 'Cimpoi', 7);
+
+INSERT INTO instrumente_muzicale (id_instrument, id_marca, id_magazin, nume_instrument, numar_instrumente)
+VALUES(320, 210, 107, 'Sitar', 33);
+
+
+commit;
+------------------------------------------------------------------------
+
+
+CREATE TABLE livrare(id_livrare NUMBER(4), id_instrument NUMBER(4), data_livrare DATE, data_sosire DATE);
+
+ALTER TABLE livrare
+ADD CONSTRAINT PK_livrare PRIMARY KEY(id_livrare)
+ADD CONSTRAINT FK_instrument2 FOREIGN KEY(id_instrument) REFERENCES instrumente_muzicale(id_instrument);
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(1234, 301, TO_DATE('2023-05-10', 'YYYY-MM-DD'), TO_DATE('2023-05-15',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(5678, 302, TO_DATE('2023-05-11', 'YYYY-MM-DD'), TO_DATE('2023-05-16',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(9876, 303, TO_DATE('2023-05-12', 'YYYY-MM-DD'), TO_DATE('2023-05-17',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(5432, 304, TO_DATE('2023-05-13', 'YYYY-MM-DD'), TO_DATE(' 2023-05-18',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(2468, 305, TO_DATE('2023-05-14', 'YYYY-MM-DD'), TO_DATE(' 2023-05-19',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(1357, 306, TO_DATE('2023-05-15', 'YYYY-MM-DD'), TO_DATE(' 2023-05-20',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(8642, 307, TO_DATE('2023-05-16', 'YYYY-MM-DD'), TO_DATE(' 2023-05-21',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(9753, 308, TO_DATE('2023-05-17', 'YYYY-MM-DD'), TO_DATE(' 2023-05-22',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(7531, 309, TO_DATE('2023-05-18', 'YYYY-MM-DD'), TO_DATE(' 2023-05-23',  'YYYY-MM-DD'));
+
+INSERT INTO livrare (id_livrare, id_instrument, data_livrare, data_sosire)
+VALUES(1029, 310, TO_DATE('2023-05-19', 'YYYY-MM-DD'), TO_DATE(' 2023-05-24',  'YYYY-MM-DD'));
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE clienti(id_client NUMBER(4), id_livrare NUMBER(4), id_magazin NUMBER(4), 
+prenume VARCHAR2(20), nume VARCHAR2(20), nume_cont CHAR(15));
+
+ALTER TABLE clienti
+ADD CONSTRAINT PK_client PRIMARY KEY(id_client)
+ADD CONSTRAINT FK_livrare2 FOREIGN KEY(id_livrare) REFERENCES livrare(id_livrare)
+ADD CONSTRAINT FK_magazin4 FOREIGN KEY(id_magazin) REFERENCES magazin(id_magazin);
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3011, 1234, 110, 'Ethan', 'Lewis', 'ethanlewis234');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3012, 5678, 101, 'Emma', 'Lee', 'emmalee567');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3013, 9876, 102, 'Daniel', 'Walker', 'danielwalker890');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3014, 5432, 103, 'Mia', 'Green', 'miagreen123');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3015, 9876, 104, 'Alexander', 'Hall', 'alexanderhall');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3016, 5432, 105, 'Sophia', 'Turner', 'sophiaturner789');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3017, 2468, 106, 'William', 'White', 'williamwhite321');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3018, 8642, 107, 'Charlotte', 'Harris', 'charlotteh654');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3019, 7531, 108, 'James', 'King', 'jamesking987');
+
+INSERT INTO clienti(id_client, id_livrare, id_magazin, prenume, nume, nume_cont)
+VALUES(3020, 1029, 109, 'Harper', 'Scott', 'harperscott012');
+
+----------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE magazin_clienti(id_client NUMBER(4), id_magazin NUMBER(4), nume_cont
+CHAR(15));
+
+ALTER TABLE magazin_clienti
+ADD CONSTRAINT FK_ID_Magazin_Clienti FOREIGN KEY(id_client) REFERENCES
+clienti(id_client)
+ADD CONSTRAINT FK_ID_Clienti_Magazin FOREIGN KEY(id_magazin) REFERENCES
+magazin(id_magazin);
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3011, 110, 'ethanlewis234');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3012, 101, 'emmalee567');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3013, 102, 'danielwalker890');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3014, 103, 'miagreen123');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3015, 104, 'alexanderhall');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3016, 105, 'sophiaturner789');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3017, 106, 'williamwhite321');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3018, 107, 'charlotteh654');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3019, 108, 'jamesking987');
+
+INSERT INTO magazin_clienti(id_client, id_magazin, nume_cont)
+VALUES(3020, 109, 'harperscott012');
+
+-------------------------------------------------------------------------------------------
+
+CREATE TABLE magazin_instrumente_muzicale(id_instrument NUMBER(4), id_magazin
+NUMBER(4), nume_instrument VARCHAR(15), numar_instrumente NUMBER(4));
+
+ALTER TABLE magazin_instrumente_muzicale
+ADD CONSTRAINT FK_ID_Magazin_Instrumente FOREIGN KEY(id_magazin) REFERENCES
+magazin(id_magazin)
+ADD CONSTRAINT FK_ID_Instrumente_Magazin FOREIGN KEY(id_instrument)
+REFERENCES instrumente_muzicale(id_instrument);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(301, 101, 'Chit. Acustica', 23);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(302, 102, 'Chit. Electrica', 57);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(303, 103, 'Tobe', 14);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(304, 104, 'Pian', 11);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(305, 105, 'Vioara', 54);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(306, 106, 'Saxofon', 67);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(307, 107, 'Trompeta', 45);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(308, 108, 'Flaut', 67);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(309, 109, 'Chitara Bas', 34);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(310, 110, 'Clape', 55);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(311, 103, 'Cello', 66);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(312,	110 ,'Banjo', 13);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(313, 107, 'Harpa', 9);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(314, 106, 'Mandolina', 24);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(315,	110, 'Acordeon', 9);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(316,	107, 'Trombon', 14);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(317, 101, 'Clarinet', 39);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(318, 102, 'Oboi', 15);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(319, 109, 'Cimpoi', 7);
+
+INSERT INTO magazin_instrumente_muzicale(id_instrument, id_magazin, nume_instrument, numar_instrumente)
+VALUES(320, 107, 'Sitar', 33);
+-------------------------------------------------------------------------------------------
+
+
+--Ex_6
+
+CREATE OR REPLACE PROCEDURE Informatii_Angajati
+IS
+    TYPE t_instrumente_radoi IS record (
+        NumeInstrument instrumente_muzicale.nume_instrument%TYPE,
+        NumarStoc instrumente_muzicale.numar_instrumente%TYPE
+    );
+
+    TYPE tablou_indexat_radoi IS TABLE OF t_instrumente_radoi INDEX BY PLS_INTEGER;
+    t_indexat tablou_indexat_radoi;
+
+    TYPE tablou_imbricat_radoi IS TABLE OF angajati%ROWTYPE;
+    t_imbricat tablou_imbricat_radoi := tablou_imbricat_radoi();
+
+    TYPE tablou_vector_radoi IS VARRAY(100) OF angajati.id_magazin%TYPE;
+    
+    t_vector_magazin tablou_vector_radoi := tablou_vector_radoi();
+
+
+BEGIN
+    for informatii in (select i.nume_instrument, i.numar_instrumente from instrumente_muzicale i) loop
+        t_indexat(t_indexat.count + 1).NumeInstrument := informatii.nume_instrument;
+        t_indexat(t_indexat.count).NumarStoc := informatii.numar_instrumente;
+    end loop;
+
+    for i in t_indexat.first..t_indexat.last loop
+        DBMS_OUTPUT.PUT_LINE(t_indexat(i).NumeInstrument || ' are in stoc un numar de ' || t_indexat(i).NumarStoc || ' exemplare' );
+    end loop;
+    DBMS_OUTPUT.NEW_LINE;
+
+    for informatii in (select * from angajati order by salariu desc) loop
+        t_imbricat.extend;
+        t_imbricat(t_imbricat.count) := informatii;
+        exit when t_imbricat.count = 5;
+    end loop;
+
+    for i in t_imbricat.first..t_imbricat.last loop
+        DBMS_OUTPUT.PUT_LINE(t_imbricat(i).nume || ' lucreaza in magazinul ' || t_imbricat(i).id_magazin);
+    end loop;
+    DBMS_OUTPUT.NEW_LINE;
+
+    FOR informatii IN (SELECT DISTINCT id_magazin FROM angajati ORDER BY id_magazin) LOOP
+        IF t_vector_magazin.COUNT < t_vector_magazin.LIMIT THEN
+            t_vector_magazin.EXTEND;
+            t_vector_magazin(t_vector_magazin.COUNT) := informatii.id_magazin;
+        END IF;
+    END LOOP;
+
+    FOR i IN 1..t_vector_magazin.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('Magazinul: ' || t_vector_magazin(i));
+    END LOOP;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('A aparut o eroare: ' || SQLERRM);
+END Informatii_Angajati;
+/
+
+BEGIN
+    Informatii_Angajati;
+END;
+/
+---------------------------------------------------------------------------------------------------
+
+--Ex_7
+
+create or replace procedure cursoare_radoi is 
+    cursor cursor_dragos is select id_marca, nume_marca
+                from marca;
+    cursor cursor_cosmin (param marca.id_marca%type) is
+            select nume_instrument, id_instrument
+            from instrumente_muzicale
+            where id_marca = param;
+
+    d_id_marca  marca.id_marca%type;
+    d_nume_marca marca.nume_marca%type;
+
+begin
+    open cursor_dragos;
+    loop
+        fetch cursor_dragos into d_id_marca, d_nume_marca;
+        exit when cursor_dragos%notfound;
+
+        dbms_output.put_line('Marca ' || d_nume_marca);
+
+        for i in cursor_cosmin(d_id_marca) loop
+            dbms_output.put_line(i.nume_instrument);
+        end loop;
+    end loop;
+end cursoare_radoi;
+/
+
+begin
+    cursoare_radoi;
+end;
+/
+
+-------------------------------------------------------------------------------------------------------------
+
+--Ex_8
+
+create or replace function cautare_locatie_instrument
+    (v_nume_instrument instrumente_muzicale.nume_instrument%TYPE DEFAULT 'Tobe')
+
+return VARCHAR is
+    nume_oras locatie.oras%type;
+    numar_instrumente instrumente_muzicale.numar_instrumente%type;
+
+    exceptie_1 EXCEPTION;
+    exceptie_2 EXCEPTION;
+begin
+    select oras, i.numar_instrumente into nume_oras, numar_instrumente
+    from instrumente_muzicale i, magazin m, locatie l
+    where nume_instrument = v_nume_instrument
+    and i.id_magazin = m.id_magazin
+    and l.id_locatie = m.id_locatie;
+
+    if numar_instrumente < 20 then
+        raise exceptie_1;
+    elsif numar_instrumente > 50 then
+        raise exceptie_2;
+    else
+        return nume_oras;
+    end if;
+
+    EXCEPTION
+        WHEN exceptie_1 THEN
+            DBMS_OUTPUT.PUT_LINE('Magazinul nu are destule instrumente');
+        WHEN exceptie_2 THEN
+            DBMS_OUTPUT.PUT_LINE('Magazinul are prea multe instrumente');
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Nu exista instrumente cu numele dat');
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20001,'Alta eroare!');
+
+end cautare_locatie_instrument;
+/
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Instrumentul se afla in orasul '|| cautare_locatie_instrument('Saxofon'));
+END;
+/
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+--Ex_9
+
+create or replace procedure oras_marca
+        (v_marca marca.nume_marca%TYPE)
+    is
+        city locatie.oras%TYPE;
+    begin
+        select l.oras into city
+        from locatie l, magazin m, magazin_instrumente_muzicale mi, instrumente_muzicale i, marca ma
+        where v_marca = nume_marca
+        and ma.id_marca = i.id_marca
+        and i.nume_instrument = mi.nume_instrument
+        and i.id_instrument = mi.id_instrument
+        and mi.id_magazin = m.id_magazin
+        and l.id_locatie = m.id_locatie;
+        DBMS_OUTPUT.PUT_LINE('Orasul in care se afla marca mentionata este '|| city);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Nu exista orase in care se afla instrumente cu marca data');
+        WHEN TOO_MANY_ROWS THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Exista mai multe orase in care se afla instrumente cu marca data');
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20002,'Alta eroare!');
+end oras_marca;
+/
+
+begin
+    oras_marca('Yamaha');
+end;
+/
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+--Ex_10
+
+CREATE OR REPLACE TRIGGER triggering_radoi
+ BEFORE INSERT OR UPDATE OR DELETE ON marca
+BEGIN
+    IF (TO_CHAR(SYSDATE,'D') = 1)
+    OR (TO_CHAR(SYSDATE,'HH24') NOT BETWEEN 0 AND 1)
+    THEN
+        RAISE_APPLICATION_ERROR(-20001,'tabelul nu poate fi actualizat');
+    END IF;
+END;
+/
+
+
+select * from marca;
+
+insert into marca(id_marca, nume_marca)
+values(223, 'Random2');
+
+DROP TRIGGER triggering_radoi;
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+--Ex_11
+
+select * from instrumente_muzicale;
+
+CREATE OR REPLACE TRIGGER triggering_radoi
+ BEFORE UPDATE OF numar_instrumente ON instrumente_muzicale
+ FOR EACH ROW
+BEGIN
+    IF (:NEW.numar_instrumente > :OLD.numar_instrumente) THEN
+    RAISE_APPLICATION_ERROR(-20002,'numarul de instrumente nu poate fi marit');
+    END IF;
+END;
+/
+
+UPDATE instrumente_muzicale
+SET numar_instrumente = numar_instrumente + 100;
+
+DROP TRIGGER triggering_radoi
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+--Ex_12
+
+CREATE OR REPLACE TRIGGER trigger_radoi_3
+AFTER ALTER ON SCHEMA
+BEGIN
+    dbms_output.put_line('Un tabel a fost modificat: ' || SYS.DICTIONARY_OBJ_NAME);
+END;
+/
+
+ALTER TABLE marca 
+    ADD nume_marca2 varchar(15);
+
+ALTER TABLE marca 
+    DROP COLUMN nume_marca2;
+        
+select * from marca;
+
+DROP TRIGGER trigger_radoi_3
