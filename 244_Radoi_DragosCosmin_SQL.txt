@@ -31,8 +31,7 @@ CREATE TABLE marca(id_marca NUMBER(4), nume_marca VARCHAR2(15));
 ALTER TABLE marca
 ADD CONSTRAINT PK_marca PRIMARY KEY(id_marca);
 
---instrumente muzicale
-CREATE TABLE instrumente_muzicale(id_instrument NUMBER(4), id_marca NUMBER(4), id_magazin NUMBER(4), nume_instrument VARCHAR2(15));
+CREATE TABLE instrumente_muzicale(id_instrument NUMBER(4), id_marca NUMBER(4), id_magazin NUMBER(4), nume_instrument VARCHAR2(15), numar_instrumente NUMBER(4));
 
 ALTER TABLE instrumente_muzicale
 ADD CONSTRAINT PK_instrument PRIMARY KEY(id_instrument)
